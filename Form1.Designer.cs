@@ -61,7 +61,7 @@
             // 
             // partsSearchBox
             // 
-            this.partsSearchBox.Location = new System.Drawing.Point(514, 92);
+            this.partsSearchBox.Location = new System.Drawing.Point(518, 85);
             this.partsSearchBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.partsSearchBox.Name = "partsSearchBox";
             this.partsSearchBox.Size = new System.Drawing.Size(228, 26);
@@ -93,16 +93,17 @@
             // 
             // productsSearchBox
             // 
-            this.productsSearchBox.Location = new System.Drawing.Point(1264, 92);
+            this.productsSearchBox.Location = new System.Drawing.Point(1266, 85);
             this.productsSearchBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.productsSearchBox.Name = "productsSearchBox";
             this.productsSearchBox.Size = new System.Drawing.Size(228, 26);
             this.productsSearchBox.TabIndex = 4;
+            this.productsSearchBox.TextChanged += new System.EventHandler(this.productsSearchBox_TextChanged);
             // 
             // partsGridLabel
             // 
             this.partsGridLabel.AutoSize = true;
-            this.partsGridLabel.Location = new System.Drawing.Point(20, 92);
+            this.partsGridLabel.Location = new System.Drawing.Point(29, 104);
             this.partsGridLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.partsGridLabel.Name = "partsGridLabel";
             this.partsGridLabel.Size = new System.Drawing.Size(46, 20);
@@ -112,7 +113,7 @@
             // productGridLabel
             // 
             this.productGridLabel.AutoSize = true;
-            this.productGridLabel.Location = new System.Drawing.Point(770, 92);
+            this.productGridLabel.Location = new System.Drawing.Point(779, 104);
             this.productGridLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.productGridLabel.Name = "productGridLabel";
             this.productGridLabel.Size = new System.Drawing.Size(72, 20);
@@ -121,18 +122,18 @@
             // 
             // partsSearchButton
             // 
-            this.partsSearchButton.Location = new System.Drawing.Point(411, 92);
+            this.partsSearchButton.Location = new System.Drawing.Point(417, 81);
             this.partsSearchButton.Name = "partsSearchButton";
-            this.partsSearchButton.Size = new System.Drawing.Size(83, 26);
+            this.partsSearchButton.Size = new System.Drawing.Size(83, 34);
             this.partsSearchButton.TabIndex = 7;
             this.partsSearchButton.Text = "Search";
             this.partsSearchButton.UseVisualStyleBackColor = true;
             // 
             // productsSearchButton
             // 
-            this.productsSearchButton.Location = new System.Drawing.Point(1160, 92);
+            this.productsSearchButton.Location = new System.Drawing.Point(1166, 81);
             this.productsSearchButton.Name = "productsSearchButton";
-            this.productsSearchButton.Size = new System.Drawing.Size(83, 26);
+            this.productsSearchButton.Size = new System.Drawing.Size(83, 34);
             this.productsSearchButton.TabIndex = 8;
             this.productsSearchButton.Text = "Search";
             this.productsSearchButton.UseVisualStyleBackColor = true;
