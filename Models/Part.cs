@@ -14,7 +14,8 @@ namespace C968_Software_I_CSharp.Models
         public decimal PartPrice { get; set; }
         public int PartMin { get; set; }
         public int PartMax { get; set; }
-
+        public int PartMachineID { get; set; }
+        public string PartCompanyName { get; set; }
 
     }
 }
