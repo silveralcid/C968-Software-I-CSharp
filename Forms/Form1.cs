@@ -1,4 +1,5 @@
-﻿using C968_Software_I_CSharp.Models;
+﻿using C968_Software_I_CSharp.Forms;
+using C968_Software_I_CSharp.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -63,6 +64,12 @@ namespace C968_Software_I_CSharp
         private void exitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void partsAddButton_Click(object sender, EventArgs e)
+        {
+            AddPart addPartForm = new AddPart();
+            addPartForm.ShowDialog();
         }
     }
 }

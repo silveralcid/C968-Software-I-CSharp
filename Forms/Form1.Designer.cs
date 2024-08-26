@@ -146,6 +146,7 @@
             this.partsAddButton.TabIndex = 9;
             this.partsAddButton.Text = "Add";
             this.partsAddButton.UseVisualStyleBackColor = true;
+            this.partsAddButton.Click += new System.EventHandler(this.partsAddButton_Click);
             // 
             // partsDeleteButton
             // 
