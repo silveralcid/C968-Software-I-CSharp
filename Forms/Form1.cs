@@ -36,8 +36,39 @@ namespace C968_Software_I_CSharp
             partsGridView.DataSource = partsList;
             productsGridView.DataSource = productsList;
 
+            // partsGridView Customization
             partsGridView.Columns["PartMachineID"].Visible = false;
             partsGridView.Columns["PartCompanyName"].Visible = false;
+            partsGridView.ReadOnly = true;
+            partsGridView.RowHeadersVisible = false;
+            partsGridView.AllowUserToAddRows = false;
+            partsGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // Change headers in partsGridView
+            partsGridView.Columns["PartID"].HeaderText = "Part ID";
+            partsGridView.Columns["PartName"].HeaderText = "Name";
+            partsGridView.Columns["PartInventory"].HeaderText = "Inventory";
+            partsGridView.Columns["PartPrice"].HeaderText = "Price";
+            partsGridView.Columns["PartMin"].HeaderText = "Min";
+            partsGridView.Columns["PartMax"].HeaderText = "Max";
+
+
+            // productsGridView Customization
+            productsGridView.ReadOnly = true;
+            productsGridView.RowHeadersVisible = false;
+            productsGridView.AllowUserToAddRows = false;
+            productsGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+
+            // Change headers in productsGridView
+            productsGridView.Columns["ProductID"].HeaderText = "Product ID";
+            productsGridView.Columns["ProductName"].HeaderText = "Name";
+            productsGridView.Columns["ProductInventory"].HeaderText = "Inventory";
+            productsGridView.Columns["ProductPrice"].HeaderText = "Price";
+            productsGridView.Columns["ProductMin"].HeaderText = "Min";
+            productsGridView.Columns["ProductMax"].HeaderText = "Max";
+
+
         }
 
 
