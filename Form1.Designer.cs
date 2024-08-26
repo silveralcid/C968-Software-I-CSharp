@@ -78,6 +78,7 @@
             this.partsGridView.RowHeadersWidth = 62;
             this.partsGridView.Size = new System.Drawing.Size(720, 231);
             this.partsGridView.TabIndex = 2;
+            this.partsGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.partsGridView_CellContentClick);
             // 
             // productsGridView
             // 

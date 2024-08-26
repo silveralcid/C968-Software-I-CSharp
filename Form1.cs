@@ -51,5 +51,10 @@ namespace C968_Software_I_CSharp
         {
 
         }
+
+        private void partsGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
