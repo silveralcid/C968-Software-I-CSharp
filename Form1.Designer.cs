@@ -57,7 +57,6 @@
             this.titleLabel.Size = new System.Drawing.Size(237, 20);
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "Inventory Management Systems";
-            this.titleLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // partsSearchBox
             // 
@@ -147,7 +146,6 @@
             this.partsAddButton.TabIndex = 9;
             this.partsAddButton.Text = "Add";
             this.partsAddButton.UseVisualStyleBackColor = true;
-            this.partsAddButton.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // partsDeleteButton
             // 
@@ -184,7 +182,6 @@
             this.productsDeleteButton.TabIndex = 13;
             this.productsDeleteButton.Text = "Delete";
             this.productsDeleteButton.UseVisualStyleBackColor = true;
-            this.productsDeleteButton.Click += new System.EventHandler(this.button2_Click);
             // 
             // productsAddButton
             // 
@@ -203,7 +200,7 @@
             this.exitButton.TabIndex = 15;
             this.exitButton.Text = "Exit";
             this.exitButton.UseVisualStyleBackColor = true;
-            this.exitButton.Click += new System.EventHandler(this.button1_Click_2);
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
             // MainScreen
             // 
