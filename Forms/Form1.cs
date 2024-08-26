@@ -16,6 +16,8 @@ namespace C968_Software_I_CSharp
     {
         private BindingList<Part> partsList = new BindingList<Part>();
         private BindingList<Product> productsList = new BindingList<Product>();
+
+
         public MainScreen()
         {
             InitializeComponent();
@@ -33,6 +35,9 @@ namespace C968_Software_I_CSharp
             // Bind the lists to the datagridviews
             partsGridView.DataSource = partsList;
             productsGridView.DataSource = productsList;
+
+            partsGridView.Columns["PartMachineID"].Visible = false;
+            partsGridView.Columns["PartCompanyName"].Visible = false;
         }
 
 
