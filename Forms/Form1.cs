@@ -69,7 +69,10 @@ namespace C968_Software_I_CSharp
         private void partsAddButton_Click(object sender, EventArgs e)
         {
             AddPart addPartForm = new AddPart();
-            addPartForm.ShowDialog();
+            if (addPartForm.ShowDialog() == DialogResult.OK)
+            {
+                partsList.Add(addPartForm.Part);
+            }
         }
     }
 }

@@ -202,6 +202,7 @@
             this.addPartSaveButton.TabIndex = 17;
             this.addPartSaveButton.Text = "Save";
             this.addPartSaveButton.UseVisualStyleBackColor = true;
+            this.addPartSaveButton.Click += new System.EventHandler(this.addPartSaveButton_Click);
             // 
             // addPartCancelButton
             // 
