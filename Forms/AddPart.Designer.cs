@@ -263,6 +263,7 @@
             this.Controls.Add(this.addPartLabel);
             this.Name = "AddPart";
             this.Text = "Part";
+            this.Load += new System.EventHandler(this.AddPart_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

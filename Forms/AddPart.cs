@@ -42,6 +42,17 @@ namespace C968_Software_I_CSharp.Forms
         private void addPartSaveButton_Click(object sender, EventArgs e)
            
         {
+            // Parse the input values
+            int inventory = int.Parse(addPartInventoryTextBox.Text);
+            int min = int.Parse(addPartMinTextBox.Text);
+            int max = int.Parse(addPartMaxTextBox.Text);
+            
+            if (inventory < min || inventory > max)
+            {
+                MessageBox.Show("Inventory value must be between Min and Max.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (partInHouseRadio.Checked)
             {
                 Part = new Part
@@ -115,6 +126,11 @@ namespace C968_Software_I_CSharp.Forms
         }
 
         private void addPartCompanyNameLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AddPart_Load(object sender, EventArgs e)
         {
 
         }

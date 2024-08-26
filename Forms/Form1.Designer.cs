@@ -156,6 +156,7 @@
             this.partsDeleteButton.TabIndex = 10;
             this.partsDeleteButton.Text = "Delete";
             this.partsDeleteButton.UseVisualStyleBackColor = true;
+            this.partsDeleteButton.Click += new System.EventHandler(this.partsDeleteButton_Click);
             // 
             // partsModifyButton
             // 

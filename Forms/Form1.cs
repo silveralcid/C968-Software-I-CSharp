@@ -22,6 +22,9 @@ namespace C968_Software_I_CSharp
         {
             InitializeComponent();
             InitializeData();
+
+            // Wire up the delete button event handler
+            partsDeleteButton.Click += new EventHandler(partsDeleteButton_Click);
         }
 
         private void InitializeData()
@@ -108,6 +111,40 @@ namespace C968_Software_I_CSharp
             if (addPartForm.ShowDialog() == DialogResult.OK)
             {
                 partsList.Add(addPartForm.Part);
+            }
+        }
+
+        private void partsDeleteButton_Click(object sender, EventArgs e)
+        {
+            // Check if a row is selected
+            if (partsGridView.SelectedRows.Count > 0)
+            {
+                // Confirm deletion
+                var result = MessageBox.Show("Are you sure you want to delete the selected part?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    // Get the index of the selected row
+                    int selectedIndex = partsGridView.SelectedRows[0].Index;
+
+                    // Remove the part from the BindingList
+                    partsList.RemoveAt(selectedIndex);
+
+                    // Ensure the selected row index is within the range
+                    if (partsGridView.Rows.Count > 0)
+                    {
+                        // Deselect all rows first to prevent automatic deletion on the next click
+                        partsGridView.ClearSelection();
+
+                        // Select the next available row, if any
+                        int newRowIndex = Math.Min(selectedIndex, partsGridView.Rows.Count - 1);
+                        partsGridView.Rows[newRowIndex].Selected = true;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a part to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
