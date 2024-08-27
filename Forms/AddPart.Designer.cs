@@ -49,6 +49,7 @@
             this.addPartCancelButton = new System.Windows.Forms.Button();
             this.addPartCompanyNameTextBox = new System.Windows.Forms.TextBox();
             this.addPartCompanyNameLabel = new System.Windows.Forms.Label();
+            this.modifyPartLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // addPartLabel
@@ -235,11 +236,21 @@
             this.addPartCompanyNameLabel.Text = "Company Name";
             this.addPartCompanyNameLabel.Click += new System.EventHandler(this.addPartCompanyNameLabel_Click);
             // 
+            // modifyPartLabel
+            // 
+            this.modifyPartLabel.AutoSize = true;
+            this.modifyPartLabel.Location = new System.Drawing.Point(13, 15);
+            this.modifyPartLabel.Name = "modifyPartLabel";
+            this.modifyPartLabel.Size = new System.Drawing.Size(88, 20);
+            this.modifyPartLabel.TabIndex = 21;
+            this.modifyPartLabel.Text = "Modify Part";
+            // 
             // AddPart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(669, 494);
+            this.Controls.Add(this.modifyPartLabel);
             this.Controls.Add(this.addPartCompanyNameTextBox);
             this.Controls.Add(this.addPartCompanyNameLabel);
             this.Controls.Add(this.addPartCancelButton);
@@ -292,5 +303,6 @@
         private System.Windows.Forms.Button addPartCancelButton;
         private System.Windows.Forms.TextBox addPartCompanyNameTextBox;
         private System.Windows.Forms.Label addPartCompanyNameLabel;
+        private System.Windows.Forms.Label modifyPartLabel;
     }
 }

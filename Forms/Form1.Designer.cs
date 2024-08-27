@@ -166,6 +166,7 @@
             this.partsModifyButton.TabIndex = 11;
             this.partsModifyButton.Text = "Modify";
             this.partsModifyButton.UseVisualStyleBackColor = true;
+            this.partsModifyButton.Click += new System.EventHandler(this.partsModifyButton_Click);
             // 
             // productsModifyButton
             // 

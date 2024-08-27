@@ -139,5 +139,21 @@ namespace C968_Software_I_CSharp
                 MessageBox.Show("The selection has been removed.", "Selection Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        private void partsModifyButton_Click(object sender, EventArgs e)
+        {
+            if (partsGridView.SelectedRows.Count > 0)
+            {
+                int selectedIndex = partsGridView.SelectedRows[0].Index;
+                Part selectedPart = partsList[selectedIndex];
+
+                AddPart modifyPartForm = new AddPart(selectedPart);
+                if (modifyPartForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Update the existing part in the list
+                    partsList[selectedIndex] = modifyPartForm.Part;
+                }
+            }
+        }
     }
 }
