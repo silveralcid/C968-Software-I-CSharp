@@ -127,6 +127,7 @@
             this.partsSearchButton.TabIndex = 7;
             this.partsSearchButton.Text = "Search";
             this.partsSearchButton.UseVisualStyleBackColor = true;
+            this.partsSearchButton.Click += new System.EventHandler(this.partsSearchButton_Click);
             // 
             // productsSearchButton
             // 
@@ -136,7 +137,7 @@
             this.productsSearchButton.TabIndex = 8;
             this.productsSearchButton.Text = "Search";
             this.productsSearchButton.UseVisualStyleBackColor = true;
-            this.productsSearchButton.Click += new System.EventHandler(this.button1_Click);
+            this.productsSearchButton.Click += new System.EventHandler(this.productsSearchButton_Click);
             // 
             // partsAddButton
             // 
@@ -176,6 +177,7 @@
             this.productsModifyButton.TabIndex = 14;
             this.productsModifyButton.Text = "Modify";
             this.productsModifyButton.UseVisualStyleBackColor = true;
+            this.productsModifyButton.Click += new System.EventHandler(this.productsModifyButton_Click);
             // 
             // productsDeleteButton
             // 
@@ -185,6 +187,7 @@
             this.productsDeleteButton.TabIndex = 13;
             this.productsDeleteButton.Text = "Delete";
             this.productsDeleteButton.UseVisualStyleBackColor = true;
+            this.productsDeleteButton.Click += new System.EventHandler(this.productsDeleteButton_Click);
             // 
             // productsAddButton
             // 
@@ -194,6 +197,7 @@
             this.productsAddButton.TabIndex = 12;
             this.productsAddButton.Text = "Add";
             this.productsAddButton.UseVisualStyleBackColor = true;
+            this.productsAddButton.Click += new System.EventHandler(this.productsAddButton_Click);
             // 
             // exitButton
             // 
@@ -209,7 +213,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightGray;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1512, 500);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.productsModifyButton);
