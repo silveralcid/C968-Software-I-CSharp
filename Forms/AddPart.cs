@@ -81,6 +81,20 @@ namespace C968_Software_I_CSharp.Forms
 
         private void addPartSaveButton_Click(object sender, EventArgs e)
         {
+            // Check if any of the required fields are empty
+            if (string.IsNullOrWhiteSpace(addPartIDTextBox.Text) ||
+                string.IsNullOrWhiteSpace(addPartNameTextBox.Text) ||
+                string.IsNullOrWhiteSpace(addPartInventoryTextBox.Text) ||
+                string.IsNullOrWhiteSpace(addPartPriceTextBox.Text) ||
+                string.IsNullOrWhiteSpace(addPartMinTextBox.Text) ||
+                string.IsNullOrWhiteSpace(addPartMaxTextBox.Text) ||
+                (partInHouseRadio.Checked && string.IsNullOrWhiteSpace(addPartMachineIDTextBox.Text)) ||  // Validate MachineID if In-House
+                (partOutsourcedRadio.Checked && string.IsNullOrWhiteSpace(addPartCompanyNameTextBox.Text))) // Validate CompanyName if Outsourced
+            {
+                MessageBox.Show("All fields are required. Please fill in all fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             // Parse the input values
             int inventory = int.Parse(addPartInventoryTextBox.Text);
             int min = int.Parse(addPartMinTextBox.Text);

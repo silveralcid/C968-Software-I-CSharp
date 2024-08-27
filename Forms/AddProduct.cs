@@ -204,6 +204,18 @@ namespace C968_Software_I_CSharp.Forms
 
         private void addProductSaveButton_Click_1(object sender, EventArgs e)
         {
+            // Check if any of the required fields are empty
+            if (string.IsNullOrWhiteSpace(addProductIDTextBox.Text) ||
+                string.IsNullOrWhiteSpace(addProductNameTextBox.Text) ||
+                string.IsNullOrWhiteSpace(addProductInventoryTextBox.Text) ||
+                string.IsNullOrWhiteSpace(addProductPriceTextBox.Text) ||
+                string.IsNullOrWhiteSpace(addProductMinTextBox.Text) ||
+                string.IsNullOrWhiteSpace(addProductMaxTextBox.Text))
+            {
+                MessageBox.Show("All fields are required. Please fill in all fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             // Parse the input values
             int inventory = int.Parse(addProductInventoryTextBox.Text);
             int min = int.Parse(addProductMinTextBox.Text);
