@@ -31,9 +31,13 @@ namespace C968_Software_I_CSharp
         {
             // Populate partsList with sample data
             partsList.Add(new Part { PartID = 0, PartName = "Wheel", PartInventory = 15, PartPrice = 12.11m, PartMin = 5, PartMax = 25 });
+            partsList.Add(new Part { PartID = 1, PartName = "Brake", PartInventory = 15, PartPrice = 12.11m, PartMin = 5, PartMax = 25 });
+
 
             // Populate productsList with sample data
             productsList.Add(new Product { ProductID = 0, ProductName = "Red Bicycle", ProductInventory = 15, ProductPrice = 11.44m, ProductMin = 1, ProductMax = 25 });
+            productsList.Add(new Product { ProductID = 1, ProductName = "Blue Bicycle", ProductInventory = 15, ProductPrice = 11.44m, ProductMin = 1, ProductMax = 25 });
+
 
             // Bind the lists to the datagridviews
             partsGridView.DataSource = partsList;
@@ -119,32 +123,20 @@ namespace C968_Software_I_CSharp
             // Check if a row is selected
             if (partsGridView.SelectedRows.Count > 0)
             {
-                // Confirm deletion
                 var result = MessageBox.Show("Are you sure you want to delete the selected part?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.Yes)
                 {
-                    // Get the index of the selected row
                     int selectedIndex = partsGridView.SelectedRows[0].Index;
 
-                    // Remove the part from the BindingList
                     partsList.RemoveAt(selectedIndex);
 
-                    // Ensure the selected row index is within the range
-                    if (partsGridView.Rows.Count > 0)
-                    {
-                        // Deselect all rows first to prevent automatic deletion on the next click
-                        partsGridView.ClearSelection();
-
-                        // Select the next available row, if any
-                        int newRowIndex = Math.Min(selectedIndex, partsGridView.Rows.Count - 1);
-                        partsGridView.Rows[newRowIndex].Selected = true;
-                    }
+                    partsGridView.ClearSelection();
                 }
             }
             else
             {
-                MessageBox.Show("Please select a part to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("The selection has been removed.", "Selection Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
