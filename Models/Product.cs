@@ -14,7 +14,7 @@ namespace C968_Software_I_CSharp.Models
         public decimal? ProductPrice { get; set; }
         public int? ProductMin { get; set; }
         public int? ProductMax { get; set; }
-
+        public List<Part> AssociatedParts { get; set; } = new List<Part>();
 
     }
 }
