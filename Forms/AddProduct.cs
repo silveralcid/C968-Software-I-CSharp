@@ -15,22 +15,41 @@ namespace C968_Software_I_CSharp.Forms
     {
         public Product Product { get; private set; }
 
-        // Constructor for adding a new product
-        public AddProduct()
+        // Constructor for adding a new product and showing parts list
+        public AddProduct(BindingList<Part> partsList)
         {
             InitializeComponent();
-            InitializeForm(null); // No product passed in, so it's an "Add" operation
+            InitializeForm(null, partsList); // No product passed in, so it's an "Add" operation
         }
 
-        // Constructor for modifying an existing product
-        public AddProduct(Product product)
+        // Constructor for modifying an existing product and showing parts list
+        public AddProduct(Product product, BindingList<Part> partsList)
         {
             InitializeComponent();
-            InitializeForm(product); // Product passed in, so it's a "Modify" operation
+            InitializeForm(product, partsList); // Product passed in, so it's a "Modify" operation
         }
 
-        private void InitializeForm(Product product)
+        private void InitializeForm(Product product, BindingList<Part> partsList)
         {
+            // Bind the parts list to the parts DataGridView in the product form
+            partsGridView.DataSource = partsList;
+
+            // partsGridView Customization
+            partsGridView.Columns["PartMachineID"].Visible = false;
+            partsGridView.Columns["PartCompanyName"].Visible = false;
+            partsGridView.ReadOnly = true;
+            partsGridView.RowHeadersVisible = false;
+            partsGridView.AllowUserToAddRows = false;
+            partsGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // Change headers in partsGridView
+            partsGridView.Columns["PartID"].HeaderText = "Part ID";
+            partsGridView.Columns["PartName"].HeaderText = "Name";
+            partsGridView.Columns["PartInventory"].HeaderText = "Inventory";
+            partsGridView.Columns["PartPrice"].HeaderText = "Price";
+            partsGridView.Columns["PartMin"].HeaderText = "Min";
+            partsGridView.Columns["PartMax"].HeaderText = "Max";
+
             if (product != null)
             {
                 modifyProductLabel.Visible = true;
@@ -87,6 +106,39 @@ namespace C968_Software_I_CSharp.Forms
         private void AddProduct_Load(object sender, EventArgs e)
         {
             // Any additional setup can be done here if needed
+        }
+
+        private void addProductCancelButton_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void addProductSaveButton_Click_1(object sender, EventArgs e)
+        {
+            // Parse the input values
+            int inventory = int.Parse(addProductInventoryTextBox.Text);
+            int min = int.Parse(addProductMinTextBox.Text);
+            int max = int.Parse(addProductMaxTextBox.Text);
+
+            if (inventory < min || inventory > max)
+            {
+                MessageBox.Show("Inventory value must be between Min and Max.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Create or modify the product object
+            Product = new Product
+            {
+                ProductID = int.Parse(addProductIDTextBox.Text),
+                ProductName = addProductNameTextBox.Text,
+                ProductInventory = inventory,
+                ProductPrice = decimal.Parse(addProductPriceTextBox.Text),
+                ProductMin = min,
+                ProductMax = max
+            };
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }

@@ -187,7 +187,7 @@ namespace C968_Software_I_CSharp
 
         private void productsAddButton_Click(object sender, EventArgs e)
         {
-            AddProduct addProductForm = new AddProduct();
+            AddProduct addProductForm = new AddProduct(partsList);
             if (addProductForm.ShowDialog() == DialogResult.OK)
             {
                 productsList.Add(addProductForm.Product);
@@ -201,7 +201,7 @@ namespace C968_Software_I_CSharp
                 int selectedIndex = productsGridView.SelectedRows[0].Index;
                 Product selectedProduct = productsList[selectedIndex];
 
-                AddProduct modifyProductForm = new AddProduct(selectedProduct);
+                AddProduct modifyProductForm = new AddProduct(selectedProduct, partsList);
                 if (modifyProductForm.ShowDialog() == DialogResult.OK)
                 {
                     productsList[selectedIndex] = modifyProductForm.Product;
