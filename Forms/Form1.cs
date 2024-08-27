@@ -132,14 +132,34 @@ namespace C968_Software_I_CSharp
             // Check if a row is selected
             if (partsGridView.SelectedRows.Count > 0)
             {
+                // Get the selected part
+                int selectedIndex = partsGridView.SelectedRows[0].Index;
+                Part selectedPart = (Part)partsGridView.Rows[selectedIndex].DataBoundItem;
+
+                // Check if the selected part is associated with any products
+                bool isPartAssociated = productsList.Any(product => product.AssociatedParts.Contains(selectedPart));
+
+                if (isPartAssociated)
+                {
+                    MessageBox.Show("This part is associated with one or more products and cannot be deleted.", "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Confirm deletion
                 var result = MessageBox.Show("Are you sure you want to delete the selected part?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.Yes)
                 {
-                    int selectedIndex = partsGridView.SelectedRows[0].Index;
+                    // Remove the part from the BindingList
                     partsList.RemoveAt(selectedIndex);
+
+                    // Clear selection
                     partsGridView.ClearSelection();
                 }
+            }
+            else
+            {
+                MessageBox.Show("Please select a part to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

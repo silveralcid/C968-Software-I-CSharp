@@ -95,10 +95,29 @@ namespace C968_Software_I_CSharp.Forms
                 return;
             }
 
+            // Validate data types for numeric fields
+            if (!int.TryParse(addPartIDTextBox.Text, out _) ||
+                !int.TryParse(addPartInventoryTextBox.Text, out _) ||
+                !decimal.TryParse(addPartPriceTextBox.Text, out _) ||
+                !int.TryParse(addPartMinTextBox.Text, out _) ||
+                !int.TryParse(addPartMaxTextBox.Text, out _) ||
+                (partInHouseRadio.Checked && !int.TryParse(addPartMachineIDTextBox.Text, out _))) // Validate MachineID if In-House
+            {
+                MessageBox.Show("Please enter valid numeric values for ID, Inventory, Price, Min, Max, and Machine ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             // Parse the input values
             int inventory = int.Parse(addPartInventoryTextBox.Text);
             int min = int.Parse(addPartMinTextBox.Text);
             int max = int.Parse(addPartMaxTextBox.Text);
+
+            // Ensure Min is not greater than Max
+            if (min > max)
+            {
+                MessageBox.Show("Min value cannot be greater than Max value.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             if (inventory < min || inventory > max)
             {

@@ -216,10 +216,28 @@ namespace C968_Software_I_CSharp.Forms
                 return;
             }
 
+            // Validate data types for numeric fields
+            if (!int.TryParse(addProductIDTextBox.Text, out _) ||
+                !int.TryParse(addProductInventoryTextBox.Text, out _) ||
+                !decimal.TryParse(addProductPriceTextBox.Text, out _) ||
+                !int.TryParse(addProductMinTextBox.Text, out _) ||
+                !int.TryParse(addProductMaxTextBox.Text, out _))
+            {
+                MessageBox.Show("Please enter valid numeric values for ID, Inventory, Price, Min, and Max.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             // Parse the input values
             int inventory = int.Parse(addProductInventoryTextBox.Text);
             int min = int.Parse(addProductMinTextBox.Text);
             int max = int.Parse(addProductMaxTextBox.Text);
+
+            // Ensure Min is not greater than Max
+            if (min > max)
+            {
+                MessageBox.Show("Min value cannot be greater than Max value.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             if (inventory < min || inventory > max)
             {
