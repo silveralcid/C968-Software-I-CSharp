@@ -49,6 +49,8 @@ namespace C968_Software_I_CSharp
 
             // Customize columns to show only relevant data
             CustomizeProductsGridView();
+            CustomizePartsGridView();
+
         }
 
         private void CustomizePartsGridView()
@@ -162,6 +164,9 @@ namespace C968_Software_I_CSharp
 
                     // Clear selection
                     partsGridView.ClearSelection();
+
+                    CustomizePartsGridView();
+
                 }
             }
             else
@@ -229,7 +234,24 @@ namespace C968_Software_I_CSharp
 
         private void productsAddButton_Click(object sender, EventArgs e)
         {
-           
+            // Create a new instance of the AddProduct form
+            AddProduct addProductForm = new AddProduct();
+
+            // Ensure that the correct labels are shown
+            addProductForm.modifyProductLabel.Visible = false;
+            addProductForm.addProductLabel.Visible = true;
+
+            // Show the AddProduct form
+            if (addProductForm.ShowDialog() == DialogResult.OK)
+            {
+                // Add the new product to the inventory
+                Inventory.AddProduct(addProductForm.Product);
+
+                // Refresh the product grid view to reflect the changes
+                productsGridView.DataSource = null; // Reset the data source
+                productsGridView.DataSource = Inventory.FullProducts; // Rebind the data source
+                CustomizeProductsGridView(); // Ensure headers and settings remain intact
+            }
         }
 
         private void productsModifyButton_Click(object sender, EventArgs e)
@@ -267,12 +289,20 @@ namespace C968_Software_I_CSharp
 
                     // Clear selection
                     productsGridView.ClearSelection();
+
+                    CustomizeProductsGridView();
                 }
             }
             else
             {
                 MessageBox.Show("Please select a product to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                CustomizeProductsGridView();
+
             }
+
+            CustomizeProductsGridView();
+
 
         }
 

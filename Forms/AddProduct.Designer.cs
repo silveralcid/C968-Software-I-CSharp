@@ -311,7 +311,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label addProductLabel;
         private System.Windows.Forms.TextBox addProductMinTextBox;
         private System.Windows.Forms.Label addProductMinLabel;
         private System.Windows.Forms.TextBox addProductMaxTextBox;
@@ -334,6 +333,7 @@
         private System.Windows.Forms.Label productAllCandidatePartsLabel;
         private System.Windows.Forms.Label productAssociatedPartsLabel;
         private System.Windows.Forms.Button addPartButton;
-        private System.Windows.Forms.Label modifyProductLabel;
+        public System.Windows.Forms.Label addProductLabel;
+        public System.Windows.Forms.Label modifyProductLabel;
     }
 }
