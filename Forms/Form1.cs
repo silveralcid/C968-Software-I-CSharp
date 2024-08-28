@@ -54,13 +54,22 @@ namespace C968_Software_I_CSharp
         private void CustomizePartsGridView()
         {
 
-            // Set column headers for better readability
             partsGridView.Columns["PartID"].HeaderText = "Part ID";
             partsGridView.Columns["PartName"].HeaderText = "Name";
             partsGridView.Columns["PartInventory"].HeaderText = "Inventory";
             partsGridView.Columns["PartPrice"].HeaderText = "Price";
             partsGridView.Columns["PartMin"].HeaderText = "Min";
             partsGridView.Columns["PartMax"].HeaderText = "Max";
+
+            // Hide any columns that shouldn't be visible
+            if (partsGridView.Columns.Contains("MachineID"))
+            {
+                partsGridView.Columns["MachineID"].Visible = false;
+            }
+            if (partsGridView.Columns.Contains("CompanyName"))
+            {
+                partsGridView.Columns["CompanyName"].Visible = false;
+            }
 
             // Set the width of columns to fit the content
             partsGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
@@ -111,21 +120,13 @@ namespace C968_Software_I_CSharp
 
         private void partsAddButton_Click(object sender, EventArgs e)
         {
-            // Create a new instance of the AddPart form
             AddPart addPartForm = new AddPart();
-
-            // Show the AddPart form as a dialog
             if (addPartForm.ShowDialog() == DialogResult.OK)
             {
-                // If the user clicked 'Save', add the new part to the inventory
                 Inventory.AddPart(addPartForm.Part);
-
-                // Refresh the partsGridView to show the new part
-                partsGridView.DataSource = null;
-                partsGridView.DataSource = Inventory.FullParts;
-
-                // Clear selection after adding the new part
-                partsGridView.ClearSelection();
+                partsGridView.DataSource = null; // Resetting DataSource to refresh the view
+                partsGridView.DataSource = Inventory.FullParts; // Reassigning the DataSource
+                CustomizePartsGridView(); // Reapply custom headers
             }
         }
 
