@@ -18,18 +18,91 @@ namespace C968_Software_I_CSharp.Forms
         public AddPart()
         {
             InitializeComponent();
+            InitializeForm(null); // No part passed in, so it's an "Add" operation
+        }
 
-            // Attach event handlers to the radio buttons
-            partInHouseRadio.CheckedChanged += new EventHandler(partInHouseRadio_CheckedChanged);
-            partOutsourcedRadio.CheckedChanged += new EventHandler(partOutsourcedRadio_CheckedChanged);
-
-            // Default to In-House
-            partInHouseRadio.Checked = true;
+        // Constructor for modifying an existing part
+        public AddPart(Part part)
+        {
+            InitializeComponent();
+            InitializeForm(part);
         }
         private void InitializeForm(Part part)
         {
-        
+            partInHouseRadio.CheckedChanged += new EventHandler(RadioButtons_CheckedChanged);
+            partOutsourcedRadio.CheckedChanged += new EventHandler(RadioButtons_CheckedChanged);
+
+            if (part != null)
+            {
+                // This is a modification scenario
+                modifyPartLabel.Visible = true;
+                addPartLabel.Visible = false;
+
+                // Populate the form fields with the existing part's data
+                addPartIDTextBox.Text = part.PartID.ToString();
+                addPartNameTextBox.Text = part.PartName;
+                addPartInventoryTextBox.Text = part.PartInventory.ToString();
+                addPartPriceTextBox.Text = part.PartPrice.ToString();
+                addPartMinTextBox.Text = part.PartMin.ToString();
+                addPartMaxTextBox.Text = part.PartMax.ToString();
+
+                if (part is InHouse inHousePart)
+                {
+                    partInHouseRadio.Checked = true;
+                    addPartMachineIDTextBox.Text = inHousePart.MachineID.ToString();
+                }
+                else if (part is OutSourced outSourcedPart)
+                {
+                    partOutsourcedRadio.Checked = true;
+                    addPartCompanyNameTextBox.Text = outSourcedPart.CompanyName;
+                }
+            }
+            else
+            {
+                // This is an add scenario
+                modifyPartLabel.Visible = false;
+                addPartLabel.Visible = true;
+
+                // Default to InHouse for new parts
+                partInHouseRadio.Checked = true;
+
+                // Clear all fields
+                addPartIDTextBox.Clear();
+                addPartNameTextBox.Clear();
+                addPartInventoryTextBox.Clear();
+                addPartPriceTextBox.Clear();
+                addPartMinTextBox.Clear();
+                addPartMaxTextBox.Clear();
+                addPartMachineIDTextBox.Clear();
+                addPartCompanyNameTextBox.Clear();
+            }
+
+            // Trigger the radio button change to set the initial state of fields
+            RadioButtons_CheckedChanged(this, EventArgs.Empty);
+
+            // Trigger the radio button change to set up the initial state of fields
+            RadioButtons_CheckedChanged(this, EventArgs.Empty);
         }
+
+        private void RadioButtons_CheckedChanged(object sender, EventArgs e)
+        {
+            if (partInHouseRadio.Checked)
+            {
+                addPartMachineIDLabel.Visible = true;
+                addPartMachineIDTextBox.Visible = true;
+
+                addPartCompanyNameLabel.Visible = false;
+                addPartCompanyNameTextBox.Visible = false;
+            }
+            else if (partOutsourcedRadio.Checked)
+            {
+                addPartMachineIDLabel.Visible = false;
+                addPartMachineIDTextBox.Visible = false;
+
+                addPartCompanyNameLabel.Visible = true;
+                addPartCompanyNameTextBox.Visible = true;
+            }
+    }
 
         private void addPartPriceCostLabel_Click(object sender, EventArgs e)
         {
@@ -63,15 +136,13 @@ namespace C968_Software_I_CSharp.Forms
             }
 
             // Validate numeric inputs
-            int machineID = 0; // Initialize machineID to avoid unassigned variable error
             if (!int.TryParse(addPartIDTextBox.Text, out int partID) ||
                 !int.TryParse(addPartInventoryTextBox.Text, out int inventory) ||
                 !decimal.TryParse(addPartPriceTextBox.Text, out decimal price) ||
                 !int.TryParse(addPartMinTextBox.Text, out int min) ||
-                !int.TryParse(addPartMaxTextBox.Text, out int max) ||
-                (partInHouseRadio.Checked && !int.TryParse(addPartMachineIDTextBox.Text, out machineID)))
+                !int.TryParse(addPartMaxTextBox.Text, out int max))
             {
-                MessageBox.Show("Please enter valid numeric values for ID, Inventory, Price, Min, Max, and Machine ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please enter valid numeric values for ID, Inventory, Price, Min, and Max.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -89,9 +160,14 @@ namespace C968_Software_I_CSharp.Forms
                 return;
             }
 
-            // Create a new Part object based on the user's input and selected part type
+            // Create or update Part object based on the user's input
             if (partInHouseRadio.Checked)
             {
+                if (!int.TryParse(addPartMachineIDTextBox.Text, out int machineID))
+                {
+                    MessageBox.Show("Please enter a valid numeric value for Machine ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 Part = new InHouse(partID, addPartNameTextBox.Text, price, inventory, min, max, machineID);
             }
             else if (partOutsourcedRadio.Checked)
@@ -99,7 +175,7 @@ namespace C968_Software_I_CSharp.Forms
                 Part = new OutSourced(partID, addPartNameTextBox.Text, price, inventory, min, max, addPartCompanyNameTextBox.Text);
             }
 
-            // Set the DialogResult to OK to indicate success and close the form
+            // Close the form and return the result
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

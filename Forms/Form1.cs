@@ -172,7 +172,30 @@ namespace C968_Software_I_CSharp
 
         private void partsModifyButton_Click(object sender, EventArgs e)
         {
-      
+            // Check if a row is selected
+            if (partsGridView.SelectedRows.Count > 0)
+            {
+                // Get the selected part
+                int selectedIndex = partsGridView.SelectedRows[0].Index;
+                Part selectedPart = Inventory.FullParts[selectedIndex];
+
+                // Open the AddPart form in modify mode by passing the selected part
+                AddPart modifyPartForm = new AddPart(selectedPart);
+                if (modifyPartForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Update the part in the inventory
+                    Inventory.UpdatePart(modifyPartForm.Part);
+
+                    // Refresh the DataGridView
+                    partsGridView.DataSource = null;
+                    partsGridView.DataSource = Inventory.FullParts;
+                    CustomizePartsGridView(); // Reapply custom headers
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a part to modify.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void partsSearchButton_Click(object sender, EventArgs e)

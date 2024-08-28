@@ -25,7 +25,7 @@ namespace C968_Software_I_CSharp.Models
             FullParts.Add(new InHouse { PartID = 0, PartName = "Wheel", PartInventory = 15, PartPrice = 12.11m, PartMin = 5, PartMax = 25, MachineID = 2990 });
             FullParts.Add(new OutSourced { PartID = 1, PartName = "Pedal", PartInventory = 11, PartPrice = 8.22m, PartMin = 5, PartMax = 25, CompanyName = "BikeParts Inc." });
             FullParts.Add(new OutSourced { PartID = 2, PartName = "Chain", PartInventory = 12, PartPrice = 8.33m, PartMin = 5, PartMax = 25, CompanyName = "ChainWorks Ltd." });
-            FullParts.Add(new InHouse { PartID = 3, PartName = "Seat", PartInventory = 18, PartPrice = 4.55m, PartMin = 2, PartMax = 15, MachineID = 2991 });
+            FullParts.Add(new InHouse { PartID = 3, PartName = "Seat", PartInventory = 8, PartPrice = 4.55m, PartMin = 2, PartMax = 15, MachineID = 2991 });
 
             // Populate FullProducts with sample data
             FullProducts.Add(new Product { ProductID = 0, ProductName = "Red Bicycle", ProductInventory = 15, ProductPrice = 11.44m, ProductMin = 1, ProductMax = 25 });
