@@ -45,7 +45,7 @@ namespace C968_Software_I_CSharp.Models
             int currentIndex;
             for (int j = 0; j < AssociatedParts.Count; j++)
             {
-                if (AssociatedParts[j].Id.Equals(i))
+                if (AssociatedParts[j].PartID.Equals(i))
                 {
                     currentIndex = j;
                     return AssociatedParts[j];
