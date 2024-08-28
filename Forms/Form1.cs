@@ -171,6 +171,31 @@ namespace C968_Software_I_CSharp
 
         private void productsSearchButton_Click(object sender, EventArgs e)
         {
+            string searchText = productsSearchBox.Text.ToLower();
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                // If search box is empty, reset the grid to show all products
+                productsGridView.DataSource = Inventory.FullProducts;
+            }
+            else
+            {
+                // Filter the FullProducts list based on the search text
+                var filteredProductsList = new BindingList<Product>(Inventory.FullProducts.Where(p =>
+                    p.ProductName.ToLower().Contains(searchText) ||
+                    p.ProductID.ToString().Contains(searchText) ||
+                    p.ProductInventory.ToString().Contains(searchText) ||
+                    p.ProductPrice.ToString().Contains(searchText) ||
+                    p.ProductMin.ToString().Contains(searchText) ||
+                    p.ProductMax.ToString().Contains(searchText)
+                ).ToList());
+
+                // Update the DataGridView with the filtered list
+                productsGridView.DataSource = filteredProductsList;
+            }
+
+            // Clear selection after search
+            productsGridView.ClearSelection();
         }
     }
 }
