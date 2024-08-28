@@ -116,7 +116,42 @@ namespace C968_Software_I_CSharp
 
         private void partsDeleteButton_Click(object sender, EventArgs e)
         {
-        
+            // Check if a row is selected
+            if (partsGridView.SelectedRows.Count > 0)
+            {
+                // Get the selected part
+                int selectedIndex = partsGridView.SelectedRows[0].Index;
+                Part selectedPart = (Part)partsGridView.Rows[selectedIndex].DataBoundItem;
+
+                // Check if the selected part is associated with any products
+                bool isPartAssociated = Inventory.FullProducts.Any(product => product.AssociatedParts.Contains(selectedPart));
+
+                if (isPartAssociated)
+                {
+                    MessageBox.Show("This part is associated with one or more products and cannot be deleted.", "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Confirm deletion
+                var result = MessageBox.Show("Are you sure you want to delete the selected part?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    // Remove the part from the Inventory
+                    Inventory.RemovePart(selectedPart);
+
+                    // Update the grid view
+                    partsGridView.DataSource = null;  // Reset the data source
+                    partsGridView.DataSource = Inventory.FullParts;  // Rebind the updated parts list
+
+                    // Clear selection
+                    partsGridView.ClearSelection();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a part to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void partsModifyButton_Click(object sender, EventArgs e)
@@ -165,8 +200,41 @@ namespace C968_Software_I_CSharp
 
         private void productsDeleteButton_Click(object sender, EventArgs e)
         {
-            
-          
+            // Check if a row is selected
+            if (productsGridView.SelectedRows.Count > 0)
+            {
+                // Get the selected product
+                int selectedIndex = productsGridView.SelectedRows[0].Index;
+                Product selectedProduct = (Product)productsGridView.Rows[selectedIndex].DataBoundItem;
+
+                // Check if the selected product has any associated parts
+                if (selectedProduct.AssociatedParts.Count > 0)
+                {
+                    MessageBox.Show("This product has associated parts and cannot be deleted.", "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Confirm deletion
+                var result = MessageBox.Show("Are you sure you want to delete the selected product?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    // Remove the product from the Inventory
+                    Inventory.RemoveProduct(selectedProduct);
+
+                    // Update the grid view
+                    productsGridView.DataSource = null;  // Reset the data source
+                    productsGridView.DataSource = Inventory.FullProducts;  // Rebind the updated products list
+
+                    // Clear selection
+                    productsGridView.ClearSelection();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a product to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
         }
 
         private void productsSearchButton_Click(object sender, EventArgs e)
