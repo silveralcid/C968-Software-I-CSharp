@@ -111,7 +111,22 @@ namespace C968_Software_I_CSharp
 
         private void partsAddButton_Click(object sender, EventArgs e)
         {
-         
+            // Create a new instance of the AddPart form
+            AddPart addPartForm = new AddPart();
+
+            // Show the AddPart form as a dialog
+            if (addPartForm.ShowDialog() == DialogResult.OK)
+            {
+                // If the user clicked 'Save', add the new part to the inventory
+                Inventory.AddPart(addPartForm.Part);
+
+                // Refresh the partsGridView to show the new part
+                partsGridView.DataSource = null;
+                partsGridView.DataSource = Inventory.FullParts;
+
+                // Clear selection after adding the new part
+                partsGridView.ClearSelection();
+            }
         }
 
         private void partsDeleteButton_Click(object sender, EventArgs e)

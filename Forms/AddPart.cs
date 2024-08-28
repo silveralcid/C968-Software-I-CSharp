@@ -13,7 +13,19 @@ namespace C968_Software_I_CSharp.Forms
 {
     public partial class AddPart : Form
     {
- 
+        public Part Part { get; private set; }
+
+        public AddPart()
+        {
+            InitializeComponent();
+
+            // Attach event handlers to the radio buttons
+            partInHouseRadio.CheckedChanged += new EventHandler(partInHouseRadio_CheckedChanged);
+            partOutsourcedRadio.CheckedChanged += new EventHandler(partOutsourcedRadio_CheckedChanged);
+
+            // Default to In-House
+            partInHouseRadio.Checked = true;
+        }
         private void InitializeForm(Part part)
         {
         
@@ -42,12 +54,26 @@ namespace C968_Software_I_CSharp.Forms
 
         private void partOutsourcedRadio_CheckedChanged(object sender, EventArgs e)
         {
-      
+            if (partOutsourcedRadio.Checked)
+            {
+                // Show Outsourced fields and hide In-House fields
+                addPartMachineIDLabel.Visible = false;
+                addPartMachineIDTextBox.Visible = false;
+                addPartCompanyNameLabel.Visible = true;
+                addPartCompanyNameTextBox.Visible = true;
+            }
         }
 
         private void partInHouseRadio_CheckedChanged(object sender, EventArgs e)
         {
-        
+            if (partInHouseRadio.Checked)
+            {
+                // Show In-House fields and hide Outsourced fields
+                addPartMachineIDLabel.Visible = true;
+                addPartMachineIDTextBox.Visible = true;
+                addPartCompanyNameLabel.Visible = false;
+                addPartCompanyNameTextBox.Visible = false;
+            }
         }
 
         private void addPartCompanyNameTextBox_TextChanged(object sender, EventArgs e)
