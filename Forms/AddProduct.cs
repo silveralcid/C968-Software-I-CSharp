@@ -1,5 +1,6 @@
 ﻿using C968_Software_I_CSharp.Models;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace C968_Software_I_CSharp.Forms
@@ -27,6 +28,8 @@ namespace C968_Software_I_CSharp.Forms
             modifyProductLabel.Visible = false;
             addProductLabel.Visible = true;
             Product = new Product(); // Initialize Product as a new Product
+
+            addProductIDTextBox.ReadOnly = true;
         }
 
         private void InitializeFormForModify(Product product)
@@ -137,8 +140,7 @@ namespace C968_Software_I_CSharp.Forms
         private void addProductSaveButton_Click_1(object sender, EventArgs e)
         {
             // Validate the inputs
-            if (string.IsNullOrWhiteSpace(addProductIDTextBox.Text) ||
-                string.IsNullOrWhiteSpace(addProductNameTextBox.Text) ||
+            if (string.IsNullOrWhiteSpace(addProductNameTextBox.Text) ||
                 string.IsNullOrWhiteSpace(addProductInventoryTextBox.Text) ||
                 string.IsNullOrWhiteSpace(addProductPriceTextBox.Text) ||
                 string.IsNullOrWhiteSpace(addProductMinTextBox.Text) ||
@@ -148,13 +150,12 @@ namespace C968_Software_I_CSharp.Forms
                 return;
             }
 
-            if (!int.TryParse(addProductIDTextBox.Text, out int productID) ||
-                !int.TryParse(addProductInventoryTextBox.Text, out int inventory) ||
+            if (!int.TryParse(addProductInventoryTextBox.Text, out int inventory) ||
                 !decimal.TryParse(addProductPriceTextBox.Text, out decimal price) ||
                 !int.TryParse(addProductMinTextBox.Text, out int min) ||
                 !int.TryParse(addProductMaxTextBox.Text, out int max))
             {
-                MessageBox.Show("Please enter valid numeric values for ID, Inventory, Price, Min, and Max.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please enter valid numeric values for Inventory, Price, Min, and Max.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -170,36 +171,27 @@ namespace C968_Software_I_CSharp.Forms
                 return;
             }
 
-
-            // Determine if this is an add or modify operation
-            Product existingProduct = Inventory.LookupProduct(productID);
-
-            if (Product == null || existingProduct == null)
+            if (Product.ProductID == 0)
             {
-                // Adding a new product
-                Product = new Product(productID, addProductNameTextBox.Text, inventory, price, min, max);
-
-                // Add the product to the inventory
+                int newProductID = Inventory.GetNextProductID(); // Generate new ID
+                Product = new Product(newProductID, addProductNameTextBox.Text, inventory, price, min, max);
                 Inventory.AddProduct(Product);
             }
             else
             {
-                // Modifying an existing product
-                existingProduct.ProductID = productID;
-                existingProduct.ProductName = addProductNameTextBox.Text;
-                existingProduct.ProductInventory = inventory;
-                existingProduct.ProductPrice = price;
-                existingProduct.ProductMin = min;
-                existingProduct.ProductMax = max;
+                Product.ProductName = addProductNameTextBox.Text;
+                Product.ProductInventory = inventory;
+                Product.ProductPrice = price;
+                Product.ProductMin = min;
+                Product.ProductMax = max;
 
-                // Update the product in the inventory
-                Inventory.UpdateProduct(existingProduct);
+                Inventory.UpdateProduct(Product);
             }
 
-            // Close the form with OK result
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
 
         private void addProductCancelButton_Click_1(object sender, EventArgs e)
         {
