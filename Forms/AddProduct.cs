@@ -13,13 +13,13 @@ namespace C968_Software_I_CSharp.Forms
         public AddProduct()
         {
             InitializeComponent();
-            InitializeFormForAdd();  // Set up the form for adding a product
+            InitializeFormForAdd(); 
         }
 
         public AddProduct(Product product)
         {
             InitializeComponent();
-            InitializeFormForModify(product);  // Set up the form for modifying a product
+            InitializeFormForModify(product);
         }
 
         private void InitializeFormForAdd()
@@ -28,7 +28,7 @@ namespace C968_Software_I_CSharp.Forms
 
             modifyProductLabel.Visible = false;
             addProductLabel.Visible = true;
-            Product = new Product(); // Initialize Product as a new Product
+            Product = new Product(); 
 
             addProductIDTextBox.ReadOnly = true;
         }
@@ -43,7 +43,6 @@ namespace C968_Software_I_CSharp.Forms
 
 
 
-            // Populate form fields with the existing product's data
             addProductIDTextBox.Text = product.ProductID.ToString();
             addProductNameTextBox.Text = product.ProductName;
             addProductInventoryTextBox.Text = product.ProductInventory.ToString();
@@ -51,7 +50,7 @@ namespace C968_Software_I_CSharp.Forms
             addProductMinTextBox.Text = product.ProductMin.ToString();
             addProductMaxTextBox.Text = product.ProductMax.ToString();
 
-            Product = product; // Assign the passed product to the Product property
+            Product = product; 
         }
 
         private void AddProduct_Load(object sender, EventArgs e)
@@ -208,7 +207,27 @@ namespace C968_Software_I_CSharp.Forms
 
         private void productPartsSearchButton_Click(object sender, EventArgs e)
         {
-            // Implement search functionality here if needed
+            string searchText = productPartsSearchTextBox.Text.ToLower();
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                partsGridView.DataSource = Inventory.FullParts;
+            }
+            else
+            {
+                var filteredPartsList = new BindingList<Part>(Inventory.FullParts.Where(p =>
+                    p.PartName.ToLower().Contains(searchText) ||
+                    p.PartID.ToString().Contains(searchText) ||
+                    p.PartInventory.ToString().Contains(searchText) ||
+                    p.PartPrice.ToString().Contains(searchText) ||
+                    p.PartMin.ToString().Contains(searchText) ||
+                    p.PartMax.ToString().Contains(searchText)
+                ).ToList());
+
+                partsGridView.DataSource = filteredPartsList;
+            }
+
+            partsGridView.ClearSelection();
         }
     }
 }
