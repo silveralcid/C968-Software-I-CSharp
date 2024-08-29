@@ -14,6 +14,7 @@ namespace C968_Software_I_CSharp.Forms
     public partial class AddPart : Form
     {
         public Part Part { get; private set; }
+        private bool isModifyMode;
 
         public AddPart()
         {
@@ -27,14 +28,17 @@ namespace C968_Software_I_CSharp.Forms
             InitializeComponent();
             InitializeForm(part);
         }
+
         private void InitializeForm(Part part)
         {
-            partInHouseRadio.CheckedChanged += new EventHandler(RadioButtons_CheckedChanged);
-            partOutsourcedRadio.CheckedChanged += new EventHandler(RadioButtons_CheckedChanged);
+            partInHouseRadio.CheckedChanged += RadioButtons_CheckedChanged;
+            partOutsourcedRadio.CheckedChanged += RadioButtons_CheckedChanged;
 
             if (part != null)
             {
                 // This is a modification scenario
+                isModifyMode = true;
+
                 modifyPartLabel.Visible = true;
                 addPartLabel.Visible = false;
 
@@ -60,6 +64,8 @@ namespace C968_Software_I_CSharp.Forms
             else
             {
                 // This is an add scenario
+                isModifyMode = false;
+
                 modifyPartLabel.Visible = false;
                 addPartLabel.Visible = true;
 
@@ -78,9 +84,6 @@ namespace C968_Software_I_CSharp.Forms
             }
 
             // Trigger the radio button change to set the initial state of fields
-            RadioButtons_CheckedChanged(this, EventArgs.Empty);
-
-            // Trigger the radio button change to set up the initial state of fields
             RadioButtons_CheckedChanged(this, EventArgs.Empty);
         }
 
@@ -102,21 +105,6 @@ namespace C968_Software_I_CSharp.Forms
                 addPartCompanyNameLabel.Visible = true;
                 addPartCompanyNameTextBox.Visible = true;
             }
-    }
-
-        private void addPartPriceCostLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void addPartCancelButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         private void addPartSaveButton_Click(object sender, EventArgs e)
@@ -175,44 +163,39 @@ namespace C968_Software_I_CSharp.Forms
                 Part = new OutSourced(partID, addPartNameTextBox.Text, price, inventory, min, max, addPartCompanyNameTextBox.Text);
             }
 
+            // Add or update the part in the inventory
+            if (isModifyMode)
+            {
+                // Update the existing part
+                Inventory.UpdatePart(Part);
+            }
+            else
+            {
+                // Check if the part ID already exists to prevent duplication
+                if (Inventory.LookupPart(partID) != null)
+                {
+                    MessageBox.Show("A part with this ID already exists. Please use a unique ID.", "Duplicate ID Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Add the new part
+                Inventory.AddPart(Part);
+            }
+
+            // Set DialogResult to OK only once to ensure it's not triggered multiple times
+            if (this.DialogResult != DialogResult.OK)
+            {
+                this.DialogResult = DialogResult.OK;
+            }
+
             // Close the form and return the result
-            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
-
-        private void partOutsourcedRadio_CheckedChanged(object sender, EventArgs e)
+        private void addPartCancelButton_Click(object sender, EventArgs e)
         {
-            if (partOutsourcedRadio.Checked)
-            {
-                // Show Outsourced fields and hide In-House fields
-                addPartMachineIDLabel.Visible = false;
-                addPartMachineIDTextBox.Visible = false;
-                addPartCompanyNameLabel.Visible = true;
-                addPartCompanyNameTextBox.Visible = true;
-            }
-        }
-
-        private void partInHouseRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            if (partInHouseRadio.Checked)
-            {
-                // Show In-House fields and hide Outsourced fields
-                addPartMachineIDLabel.Visible = true;
-                addPartMachineIDTextBox.Visible = true;
-                addPartCompanyNameLabel.Visible = false;
-                addPartCompanyNameTextBox.Visible = false;
-            }
-        }
-
-        private void addPartCompanyNameTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void addPartCompanyNameLabel_Click(object sender, EventArgs e)
-        {
-
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
 
         private void AddPart_Load(object sender, EventArgs e)

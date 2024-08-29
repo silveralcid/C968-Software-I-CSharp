@@ -65,7 +65,6 @@
             this.partsSearchBox.Name = "partsSearchBox";
             this.partsSearchBox.Size = new System.Drawing.Size(228, 26);
             this.partsSearchBox.TabIndex = 1;
-            this.partsSearchBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // partsGridView
             // 
@@ -96,7 +95,6 @@
             this.productsSearchBox.Name = "productsSearchBox";
             this.productsSearchBox.Size = new System.Drawing.Size(228, 26);
             this.productsSearchBox.TabIndex = 4;
-            this.productsSearchBox.TextChanged += new System.EventHandler(this.productsSearchBox_TextChanged);
             // 
             // partsGridLabel
             // 

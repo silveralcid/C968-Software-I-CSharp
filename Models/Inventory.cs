@@ -39,23 +39,18 @@ namespace C968_Software_I_CSharp.Models
         {
             FullParts.Add(part);
         }
-        public static Part LookupPart(int i)
-        {   //Returns the currently selected Part object
-            for (int j = 0; j < FullParts.Count; j++)
-            {
-                if (FullParts[j].PartID.Equals(i))
-                {
-                    CurrentPartIndex = j;
-                    return FullParts[j];
-                }
-            }
-            CurrentPartIndex = -1;
-            return null;
+        public static Part LookupPart(int id)
+        {
+            return FullParts.FirstOrDefault(p => p.PartID == id);
         }
         public static void UpdatePart(Part part)
         {
-            FullParts.Insert(CurrentPartIndex, part);
-            FullParts.RemoveAt(CurrentPartIndex + 1);
+            int index = FullParts.ToList().FindIndex(p => p.PartID == part.PartID);
+            if (index != -1)
+            {
+                // Update the existing part with the new values
+                FullParts[index] = part;
+            }
         }
         public static void RemovePart(Part part)
         {
@@ -71,23 +66,18 @@ namespace C968_Software_I_CSharp.Models
         {
             FullProducts.Remove(product);
         }
-        public static Product LookupProduct(int i)
-        {   //Returns the currently selected Product object
-            for (int j = 0; j < FullProducts.Count; j++)
-            {
-                if (FullProducts[j].ProductID.Equals(i))
-                {
-                    CurrentProductIndex = j;
-                    return FullProducts[j];
-                }
-            }
-            CurrentProductIndex = -1;
-            return null;
+        public static Product LookupProduct(int id)
+        {
+            return FullProducts.FirstOrDefault(p => p.ProductID == id);
         }
         public static void UpdateProduct(Product product)
         {
-            FullProducts.Insert(CurrentProductIndex, product);
-            FullProducts.RemoveAt(CurrentProductIndex + 1);
+            int index = FullProducts.ToList().FindIndex(p => p.ProductID == product.ProductID);
+            if (index != -1)
+            {
+                // Update the existing product with the new values
+                FullProducts[index] = product;
+            }
         }
     }
 }

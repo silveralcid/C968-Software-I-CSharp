@@ -33,7 +33,6 @@ namespace C968_Software_I_CSharp
             partsGridView.AllowUserToAddRows = false;
             partsGridView.RowHeadersVisible = false;
 
-
             // Customize columns to show only relevant data
             CustomizePartsGridView();
 
@@ -43,13 +42,10 @@ namespace C968_Software_I_CSharp
             productsGridView.ReadOnly = true;
             productsGridView.MultiSelect = false;
             productsGridView.AllowUserToAddRows = false;
-
-            // Remove the row header column
             productsGridView.RowHeadersVisible = false;
 
             // Customize columns to show only relevant data
             CustomizeProductsGridView();
-            CustomizePartsGridView();
 
         }
 
@@ -79,7 +75,6 @@ namespace C968_Software_I_CSharp
 
         private void CustomizeProductsGridView()
         {
-            // Set column headers for better readability
             productsGridView.Columns["ProductID"].HeaderText = "Product ID";
             productsGridView.Columns["ProductName"].HeaderText = "Name";
             productsGridView.Columns["ProductInventory"].HeaderText = "Inventory";
@@ -91,57 +86,28 @@ namespace C968_Software_I_CSharp
             productsGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
-
-        private void InitializeData()
-        {
+        #region Parts Event Handlers
 
 
-        }
-
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-
-        private void productsSearchBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void exitButton_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
 
         private void partsAddButton_Click(object sender, EventArgs e)
         {
             AddPart addPartForm = new AddPart();
             if (addPartForm.ShowDialog() == DialogResult.OK)
             {
-                Inventory.AddPart(addPartForm.Part);
-                partsGridView.DataSource = null; // Resetting DataSource to refresh the view
-                partsGridView.DataSource = Inventory.FullParts; // Reassigning the DataSource
-                CustomizePartsGridView(); // Reapply custom headers
+                partsGridView.DataSource = null;
+                partsGridView.DataSource = Inventory.FullParts;
+                CustomizePartsGridView();
             }
         }
 
         private void partsDeleteButton_Click(object sender, EventArgs e)
         {
-            // Check if a row is selected
             if (partsGridView.SelectedRows.Count > 0)
             {
-                // Get the selected part
                 int selectedIndex = partsGridView.SelectedRows[0].Index;
                 Part selectedPart = (Part)partsGridView.Rows[selectedIndex].DataBoundItem;
 
-                // Check if the selected part is associated with any products
                 bool isPartAssociated = Inventory.FullProducts.Any(product => product.AssociatedParts.Contains(selectedPart));
 
                 if (isPartAssociated)
@@ -150,23 +116,15 @@ namespace C968_Software_I_CSharp
                     return;
                 }
 
-                // Confirm deletion
                 var result = MessageBox.Show("Are you sure you want to delete the selected part?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.Yes)
                 {
-                    // Remove the part from the Inventory
                     Inventory.RemovePart(selectedPart);
-
-                    // Update the grid view
-                    partsGridView.DataSource = null;  // Reset the data source
-                    partsGridView.DataSource = Inventory.FullParts;  // Rebind the updated parts list
-
-                    // Clear selection
+                    partsGridView.DataSource = null;
+                    partsGridView.DataSource = Inventory.FullParts;
                     partsGridView.ClearSelection();
-
                     CustomizePartsGridView();
-
                 }
             }
             else
@@ -177,24 +135,18 @@ namespace C968_Software_I_CSharp
 
         private void partsModifyButton_Click(object sender, EventArgs e)
         {
-            // Check if a row is selected
             if (partsGridView.SelectedRows.Count > 0)
             {
-                // Get the selected part
                 int selectedIndex = partsGridView.SelectedRows[0].Index;
                 Part selectedPart = Inventory.FullParts[selectedIndex];
 
-                // Open the AddPart form in modify mode by passing the selected part
                 AddPart modifyPartForm = new AddPart(selectedPart);
                 if (modifyPartForm.ShowDialog() == DialogResult.OK)
                 {
-                    // Update the part in the inventory
-                    Inventory.UpdatePart(modifyPartForm.Part);
-
-                    // Refresh the DataGridView
+                 //   Inventory.UpdatePart(modifyPartForm.Part);
                     partsGridView.DataSource = null;
                     partsGridView.DataSource = Inventory.FullParts;
-                    CustomizePartsGridView(); // Reapply custom headers
+                    CustomizePartsGridView();
                 }
             }
             else
@@ -209,12 +161,10 @@ namespace C968_Software_I_CSharp
 
             if (string.IsNullOrEmpty(searchText))
             {
-                // If search box is empty, reset the grid to show all parts
                 partsGridView.DataSource = Inventory.FullParts;
             }
             else
             {
-                // Filter the FullParts list based on the search text
                 var filteredPartsList = new BindingList<Part>(Inventory.FullParts.Where(p =>
                     p.PartName.ToLower().Contains(searchText) ||
                     p.PartID.ToString().Contains(searchText) ||
@@ -224,86 +174,78 @@ namespace C968_Software_I_CSharp
                     p.PartMax.ToString().Contains(searchText)
                 ).ToList());
 
-                // Update the DataGridView with the filtered list
                 partsGridView.DataSource = filteredPartsList;
             }
 
-            // Clear selection after search
             partsGridView.ClearSelection();
         }
 
+        #endregion
+
+        #region Products Event Handlers
+
         private void productsAddButton_Click(object sender, EventArgs e)
         {
-            // Create a new instance of the AddProduct form
             AddProduct addProductForm = new AddProduct();
 
-            // Ensure that the correct labels are shown
-            addProductForm.modifyProductLabel.Visible = false;
-            addProductForm.addProductLabel.Visible = true;
-
-            // Show the AddProduct form
             if (addProductForm.ShowDialog() == DialogResult.OK)
             {
-                // Add the new product to the inventory
-                Inventory.AddProduct(addProductForm.Product);
-
-                // Refresh the product grid view to reflect the changes
-                productsGridView.DataSource = null; // Reset the data source
-                productsGridView.DataSource = Inventory.FullProducts; // Rebind the data source
-                CustomizeProductsGridView(); // Ensure headers and settings remain intact
+                productsGridView.DataSource = null;
+                productsGridView.DataSource = Inventory.FullProducts;
+                CustomizeProductsGridView();
             }
         }
 
         private void productsModifyButton_Click(object sender, EventArgs e)
         {
-          
+            if (productsGridView.SelectedRows.Count > 0)
+            {
+                Product selectedProduct = (Product)productsGridView.SelectedRows[0].DataBoundItem;
+
+                AddProduct modifyProductForm = new AddProduct(selectedProduct);
+
+                if (modifyProductForm.ShowDialog() == DialogResult.OK)
+                {
+                    Inventory.UpdateProduct(modifyProductForm.Product);
+                    productsGridView.DataSource = null;
+                    productsGridView.DataSource = Inventory.FullProducts;
+                    CustomizeProductsGridView();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a product to modify.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void productsDeleteButton_Click(object sender, EventArgs e)
         {
-            // Check if a row is selected
             if (productsGridView.SelectedRows.Count > 0)
             {
-                // Get the selected product
                 int selectedIndex = productsGridView.SelectedRows[0].Index;
                 Product selectedProduct = (Product)productsGridView.Rows[selectedIndex].DataBoundItem;
 
-                // Check if the selected product has any associated parts
                 if (selectedProduct.AssociatedParts.Count > 0)
                 {
                     MessageBox.Show("This product has associated parts and cannot be deleted.", "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                // Confirm deletion
                 var result = MessageBox.Show("Are you sure you want to delete the selected product?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.Yes)
                 {
-                    // Remove the product from the Inventory
                     Inventory.RemoveProduct(selectedProduct);
-
-                    // Update the grid view
-                    productsGridView.DataSource = null;  // Reset the data source
-                    productsGridView.DataSource = Inventory.FullProducts;  // Rebind the updated products list
-
-                    // Clear selection
+                    productsGridView.DataSource = null;
+                    productsGridView.DataSource = Inventory.FullProducts;
                     productsGridView.ClearSelection();
-
                     CustomizeProductsGridView();
                 }
             }
             else
             {
                 MessageBox.Show("Please select a product to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                CustomizeProductsGridView();
-
             }
-
-            CustomizeProductsGridView();
-
-
         }
 
         private void productsSearchButton_Click(object sender, EventArgs e)
@@ -312,12 +254,10 @@ namespace C968_Software_I_CSharp
 
             if (string.IsNullOrEmpty(searchText))
             {
-                // If search box is empty, reset the grid to show all products
                 productsGridView.DataSource = Inventory.FullProducts;
             }
             else
             {
-                // Filter the FullProducts list based on the search text
                 var filteredProductsList = new BindingList<Product>(Inventory.FullProducts.Where(p =>
                     p.ProductName.ToLower().Contains(searchText) ||
                     p.ProductID.ToString().Contains(searchText) ||
@@ -327,12 +267,17 @@ namespace C968_Software_I_CSharp
                     p.ProductMax.ToString().Contains(searchText)
                 ).ToList());
 
-                // Update the DataGridView with the filtered list
                 productsGridView.DataSource = filteredProductsList;
             }
 
-            // Clear selection after search
             productsGridView.ClearSelection();
+        }
+
+        #endregion
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

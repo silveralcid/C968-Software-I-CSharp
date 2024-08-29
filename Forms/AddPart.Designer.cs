@@ -71,7 +71,6 @@
             this.partInHouseRadio.TabStop = true;
             this.partInHouseRadio.Text = "In-House";
             this.partInHouseRadio.UseVisualStyleBackColor = true;
-            this.partInHouseRadio.CheckedChanged += new System.EventHandler(this.partInHouseRadio_CheckedChanged);
             // 
             // addPartIDTextBox
             // 
@@ -108,7 +107,6 @@
             this.addPartNameLabel.Size = new System.Drawing.Size(51, 20);
             this.addPartNameLabel.TabIndex = 5;
             this.addPartNameLabel.Text = "Name";
-            this.addPartNameLabel.Click += new System.EventHandler(this.addPartPriceCostLabel_Click);
             // 
             // addPartNameTextBox
             // 
@@ -196,7 +194,6 @@
             this.addPartMinLabel.Size = new System.Drawing.Size(34, 20);
             this.addPartMinLabel.TabIndex = 15;
             this.addPartMinLabel.Text = "Min";
-            this.addPartMinLabel.Click += new System.EventHandler(this.label5_Click);
             // 
             // addPartSaveButton
             // 
@@ -224,7 +221,6 @@
             this.addPartCompanyNameTextBox.Name = "addPartCompanyNameTextBox";
             this.addPartCompanyNameTextBox.Size = new System.Drawing.Size(191, 26);
             this.addPartCompanyNameTextBox.TabIndex = 20;
-            this.addPartCompanyNameTextBox.TextChanged += new System.EventHandler(this.addPartCompanyNameTextBox_TextChanged);
             // 
             // addPartCompanyNameLabel
             // 
@@ -234,7 +230,6 @@
             this.addPartCompanyNameLabel.Size = new System.Drawing.Size(122, 20);
             this.addPartCompanyNameLabel.TabIndex = 19;
             this.addPartCompanyNameLabel.Text = "Company Name";
-            this.addPartCompanyNameLabel.Click += new System.EventHandler(this.addPartCompanyNameLabel_Click);
             // 
             // modifyPartLabel
             // 
