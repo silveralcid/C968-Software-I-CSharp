@@ -50,6 +50,9 @@ namespace C968_Software_I_CSharp.Forms
                 addPartMinTextBox.Text = part.PartMin.ToString();
                 addPartMaxTextBox.Text = part.PartMax.ToString();
 
+                addPartIDTextBox.ReadOnly = true;
+
+
                 if (part is InHouse inHousePart)
                 {
                     partInHouseRadio.Checked = true;
@@ -81,7 +84,11 @@ namespace C968_Software_I_CSharp.Forms
                 addPartMaxTextBox.Clear();
                 addPartMachineIDTextBox.Clear();
                 addPartCompanyNameTextBox.Clear();
+
+                addPartIDTextBox.ReadOnly = false;
             }
+
+
 
             // Trigger the radio button change to set the initial state of fields
             RadioButtons_CheckedChanged(this, EventArgs.Empty);

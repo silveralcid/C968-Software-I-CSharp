@@ -22,6 +22,8 @@ namespace C968_Software_I_CSharp.Forms
 
         private void InitializeFormForAdd()
         {
+            addProductIDTextBox.ReadOnly = false;
+
             modifyProductLabel.Visible = false;
             addProductLabel.Visible = true;
             Product = new Product(); // Initialize Product as a new Product
@@ -29,8 +31,13 @@ namespace C968_Software_I_CSharp.Forms
 
         private void InitializeFormForModify(Product product)
         {
+
+            addProductIDTextBox.ReadOnly = true;
+
             modifyProductLabel.Visible = true;
             addProductLabel.Visible = false;
+
+
 
             // Populate form fields with the existing product's data
             addProductIDTextBox.Text = product.ProductID.ToString();
