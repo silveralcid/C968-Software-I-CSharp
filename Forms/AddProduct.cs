@@ -1,5 +1,6 @@
 ﻿using C968_Software_I_CSharp.Models;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -175,6 +176,12 @@ namespace C968_Software_I_CSharp.Forms
             {
                 int newProductID = Inventory.GetNextProductID(); // Generate new ID
                 Product = new Product(newProductID, addProductNameTextBox.Text, inventory, price, min, max);
+
+                // Ensure associated parts are copied to the new product
+                Product.AssociatedParts = new BindingList<Part>(associatedPartsGridView.Rows.Cast<DataGridViewRow>()
+                                                          .Select(row => (Part)row.DataBoundItem)
+                                                          .ToList());
+
                 Inventory.AddProduct(Product);
             }
             else
