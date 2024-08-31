@@ -142,25 +142,14 @@ namespace C968_Software_I_CSharp.Forms
 
             if (isModifyMode)
             {
-                // Modifying an existing part
-                Part.PartName = addPartNameTextBox.Text;
-                Part.PartInventory = inventory;
-                Part.PartPrice = price;
-                Part.PartMin = min;
-                Part.PartMax = max;
-
-                if (Part is InHouse inHousePart)
+                // Recreate the part based on the selected radio button option
+                if (partInHouseRadio.Checked)
                 {
-                    if (!int.TryParse(addPartMachineIDTextBox.Text, out machineID))
-                    {
-                        MessageBox.Show("Please enter a valid numeric value for Machine ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    inHousePart.MachineID = machineID;
+                    Part = new InHouse(Part.PartID, addPartNameTextBox.Text, price, inventory, min, max, machineID);
                 }
-                else if (Part is OutSourced outSourcedPart)
+                else if (partOutsourcedRadio.Checked)
                 {
-                    outSourcedPart.CompanyName = addPartCompanyNameTextBox.Text;
+                    Part = new OutSourced(Part.PartID, addPartNameTextBox.Text, price, inventory, min, max, addPartCompanyNameTextBox.Text);
                 }
 
                 Inventory.UpdatePart(Part);
