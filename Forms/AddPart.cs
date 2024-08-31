@@ -133,6 +133,13 @@ namespace C968_Software_I_CSharp.Forms
                 return;
             }
 
+            int machineID = 0;
+            if (partInHouseRadio.Checked && !int.TryParse(addPartMachineIDTextBox.Text, out machineID))
+            {
+                MessageBox.Show("Please enter a valid numeric value for Machine ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (isModifyMode)
             {
                 // Modifying an existing part
@@ -144,7 +151,12 @@ namespace C968_Software_I_CSharp.Forms
 
                 if (Part is InHouse inHousePart)
                 {
-                    inHousePart.MachineID = int.Parse(addPartMachineIDTextBox.Text);
+                    if (!int.TryParse(addPartMachineIDTextBox.Text, out machineID))
+                    {
+                        MessageBox.Show("Please enter a valid numeric value for Machine ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    inHousePart.MachineID = machineID;
                 }
                 else if (Part is OutSourced outSourcedPart)
                 {
@@ -155,14 +167,9 @@ namespace C968_Software_I_CSharp.Forms
             }
             else
             {
-                int newPartID = Inventory.GetNextPartID(); 
+                int newPartID = Inventory.GetNextPartID();
                 if (partInHouseRadio.Checked)
                 {
-                    if (!int.TryParse(addPartMachineIDTextBox.Text, out int machineID))
-                    {
-                        MessageBox.Show("Please enter a valid numeric value for Machine ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
                     Part = new InHouse(newPartID, addPartNameTextBox.Text, price, inventory, min, max, machineID);
                 }
                 else if (partOutsourcedRadio.Checked)
