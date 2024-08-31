@@ -122,11 +122,20 @@ namespace C968_Software_I_CSharp.Forms
         {
             if (associatedPartsGridView.SelectedRows.Count > 0)
             {
-                int selectedIndex = associatedPartsGridView.SelectedRows[0].Index;
-                Product.RemoveAssociatedPart(selectedIndex);
+                // Prompt the user for confirmation before deleting the part
+                var confirmResult = MessageBox.Show("Are you sure you want to remove the selected part?",
+                                                    "Confirm Deletion",
+                                                    MessageBoxButtons.YesNo,
+                                                    MessageBoxIcon.Question);
 
-                associatedPartsGridView.DataSource = null;
-                associatedPartsGridView.DataSource = Product.AssociatedParts;
+                if (confirmResult == DialogResult.Yes)
+                {
+                    int selectedIndex = associatedPartsGridView.SelectedRows[0].Index;
+                    Product.RemoveAssociatedPart(selectedIndex);
+
+                    associatedPartsGridView.DataSource = null;
+                    associatedPartsGridView.DataSource = Product.AssociatedParts;
+                }
             }
             else
             {
