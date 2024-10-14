@@ -14,7 +14,6 @@
 ## About The Project
 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
@@ -22,12 +21,9 @@
 
 * Test
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- CONTACT -->
 ## Contact
 
 Silver Alcid - [My Website](https://silveralcid.com) - silveralcid@outlook.com
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
