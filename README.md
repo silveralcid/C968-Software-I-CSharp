@@ -18,7 +18,7 @@ The objective of this project was to develop an inventory management application
 
 * .NET
 * C#
-* WinForms
+* Windows Forms
 
 
 ## Course Information
