@@ -3,7 +3,7 @@
 <h3 align="center">Software I - C#</h3>
 
   <p align="center">
-    Course C968 - Western Governer's University
+    Course C968 - Inventory Management Application
     <br />
     <br />
     <a href="https://github.com/github_username/repo_name">View Demo</a>
