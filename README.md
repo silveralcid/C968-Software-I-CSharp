@@ -6,7 +6,7 @@
     Course C968 - Inventory Management Application
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://youtu.be/oj1L3Ny5DL4">View Demo</a>
 </div>
 
 
