@@ -12,8 +12,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-
+The objective of this project was to develop an inventory management application using C# and Windows Forms. The application is designed to manage products and the parts required for their manufacturing. It tracks and manages key data such as product and part IDs, names, prices, inventory quantities, as well as minimum and maximum inventory thresholds. The system provides essential functionality, including the ability to search, add, modify, and delete records for both products and parts.
 
 ### Built With
 
